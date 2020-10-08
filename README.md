@@ -1,24 +1,17 @@
-# exchange-rates-web
+# Exchange Rates Web
 
-## Project setup
-```
-yarn install
-```
+## Getting Started
 
-### Compiles and hot-reloads for development
+### Open In Development Mode
+
 ```
+yarn
 yarn serve
 ```
 
-### Compiles and minifies for production
-```
-yarn build
-```
+### To Run Test
 
-### Lints and fixes files
 ```
-yarn lint
+yarn
+yarn serve
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
