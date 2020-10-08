@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="w-full min-h-screen py-8 px-2 bg-gray-100">
     <Home />
   </div>
 </template>
@@ -14,11 +14,3 @@ export default {
   },
 };
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-</style>

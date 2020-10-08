@@ -3,15 +3,25 @@ import axios from "axios";
 import Home from "../Home.vue";
 
 beforeAll(() => {
-  jest.spyOn(axios, "get").mockResolvedValue({
-    data: {
-      rates: {
-        AUD: 0.044714628,
-        BGN: 0.0532567258,
-        BRL: 0.1792615184,
-        USD: 2312312,
-      },
-    },
+  jest.spyOn(axios, "get").mockImplementation((url) => {
+    if (url.match(/symbols/)) {
+      return Promise.resolve({
+        symbols: ["AUD", "BGN", "BRL", "THB", "USD"],
+      });
+    }
+    if (url.match(/rates/)) {
+      return Promise.resolve({
+        data: {
+          rates: {
+            AUD: 0.044714628,
+            BGN: 0.0532567258,
+            BRL: 0.1792615184,
+            THB: 1,
+            USD: 0.03209263233186368,
+          },
+        },
+      });
+    }
   });
 });
 
@@ -19,17 +29,19 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-it("should render exchange rates list when completed submit form", async () => {
+it("should render exchange rates list when change dropdown", async () => {
   render(Home);
 
-  const baseInput = screen.getByPlaceholderText(/base rate/i);
-  fireEvent.update(baseInput, "THB");
+  const baseInput = screen.getByLabelText(/select base/i);
+  await fireEvent.update(baseInput, "THB");
 
-  const submitButton = screen.getByText(/view rates/i);
-  fireEvent.click(submitButton);
-
+  expect(await screen.findAllByText(/thb - 1/i)).toHaveLength(1);
   expect(await screen.findAllByText(/usd/i)).toHaveLength(1);
-  expect(await screen.findAllByText(/aud/i)).toHaveLength(1);
-  expect(axios.get).toHaveBeenCalledTimes(1);
-  expect(axios.get).toHaveBeenCalledWith(expect.stringMatching(/base=thb/i));
+
+  expect(axios.get).toHaveBeenCalledTimes(2);
+  expect(axios.get).toHaveBeenNthCalledWith(
+    1,
+    expect.stringMatching(/symbols/i)
+  );
+  expect(axios.get).toHaveBeenNthCalledWith(2, expect.stringMatching(/rates/i));
 });

@@ -4,11 +4,11 @@ const { VUE_APP_EXCHANGE_RATES_API } = process.env;
 
 const get = async ({ base }) => {
   const response = await axios.get(
-    `${VUE_APP_EXCHANGE_RATES_API}/latest?base=${base}`
+    `${VUE_APP_EXCHANGE_RATES_API}/rates?base=${base}`
   );
-  const exchangeRates = await response.data;
+  const rates = await response.data.rates;
 
-  return exchangeRates;
+  return rates;
 };
 
 export { get };
