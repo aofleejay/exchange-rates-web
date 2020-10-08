@@ -2,6 +2,8 @@
 
 Here's demo website [https://kunapot-exchange-rates.netlify.app](https://kunapot-exchange-rates.netlify.app)
 
+This site is build using Vue, TailwindCSS and Vue Testing Library.
+
 ## Open In Development Mode
 
 ```
@@ -13,5 +15,5 @@ yarn serve
 
 ```
 yarn
-yarn serve
+yarn test
 ```
